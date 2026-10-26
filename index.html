@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyMed - Citas Médicas Inclusivas</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="top-bar">
+        <div class="logo">EasyMed</div>
+        <div class="accessibility-controls">
+            <button id="btn-contrast" aria-label="Activar Alto Contraste">🌓 Alto Contraste</button>
+            <button id="btn-text-decrease" aria-label="Reducir texto">A-</button>
+            <button id="btn-text-increase" aria-label="Aumentar texto">A+</button>
+        </div>
+    </header>
+
+    <main id="app-container">
+        
+        <section id="view-login" class="view active">
+            <h1>Ingreso al Sistema</h1>
+            <p>Te enviaremos un código de seguridad por mensaje de texto (SMS). Sin contraseñas.</p>
+            
+            <div class="form-group">
+                <label for="dni-input">Número de DNI (8 dígitos):</label>
+                <div class="input-with-mic">
+                    <input type="number" id="dni-input" placeholder="Escribe aquí tu DNI..." aria-required="true">
+                    <button class="mic-btn" onclick="iniciarDictado('dni-input')" aria-label="Dictar DNI por voz">🎤 Voz</button>
+                </div>
+            </div>
+            
+            <button class="btn-primary" onclick="navegarA('view-specialty')">ENVIAR CÓDIGO POR SMS &rarr;</button>
+        </section>
+
+        <section id="view-specialty" class="view hidden">
+            <button class="btn-back" onclick="navegarA('view-login')">&larr; Volver</button>
+            <h2>Paso 1 de 3: Elige la Especialidad</h2>
+            <div class="progress-bar"><div class="progress" style="width: 33%;"></div></div>
+            
+            <div class="form-group">
+                <div class="input-with-mic">
+                    <input type="text" id="search-specialty" placeholder="Buscar especialidad...">
+                    <button class="mic-btn" onclick="iniciarDictado('search-specialty')" aria-label="Dictar especialidad">🎤 Voz</button>
+                </div>
+            </div>
+
+            <div class="grid-options">
+                <button class="card-btn" onclick="seleccionarEspecialidad('Medicina General')">👨‍⚕️ Medicina General</button>
+                <button class="card-btn" onclick="seleccionarEspecialidad('Pediatría')">👶 Pediatría</button>
+                <button class="card-btn" onclick="seleccionarEspecialidad('Cardiología')">❤️ Cardiología</button>
+                <button class="card-btn" onclick="seleccionarEspecialidad('Odontología')">🦷 Odontología</button>
+            </div>
+        </section>
+
+        <section id="view-datetime" class="view hidden">
+            <button class="btn-back" onclick="navegarA('view-specialty')">&larr; Volver</button>
+            <h2>Paso 2 de 3: Fecha y Hora</h2>
+            <div class="progress-bar"><div class="progress" style="width: 66%;"></div></div>
+
+            <h3>1. Elige la Fecha</h3>
+            <div class="form-group">
+                <div class="input-with-mic">
+                    <input type="date" id="date-input" aria-label="Seleccionar fecha en calendario">
+                    <button class="mic-btn" onclick="iniciarDictado('date-input')" aria-label="Dictar fecha">🎤 Voz</button>
+                </div>
+            </div>
+
+            <h3>2. Elige la Hora</h3>
+            <div class="grid-options times">
+                <button class="card-btn time-btn" onclick="seleccionarHora('08:00 AM')">08:00 AM</button>
+                <button class="card-btn time-btn" onclick="seleccionarHora('09:30 AM')">09:30 AM</button>
+                <button class="card-btn time-btn" onclick="seleccionarHora('11:00 AM')">11:00 AM</button>
+            </div>
+        </section>
+
+        <section id="view-confirmation" class="view hidden">
+            <h2>Paso 3 de 3: Confirmar Datos</h2>
+            <div class="progress-bar"><div class="progress" style="width: 100%;"></div></div>
+
+            <div class="ticket-resumen" tabindex="0">
+                <h3>Resumen de tu Cita</h3>
+                <p><strong>Especialidad:</strong> <span id="res-specialty">---</span></p>
+                <p><strong>Fecha:</strong> <span id="res-date">---</span></p>
+                <p><strong>Hora:</strong> <span id="res-time">---</span></p>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-primary" onclick="finalizarCita()">&#10003; CONFIRMAR CITA</button>
+                <button class="btn-secondary" onclick="navegarA('view-specialty')">&#9998; MODIFICAR DATOS</button>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="help-box">
+        <p>¿Necesitas ayuda? <strong>📞 Llamar al 350-0800</strong></p>
+    </footer>
+
+    <div id="timeout-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>¿Sigues ahí?</h2>
+            <p>Tu sesión está a punto de cerrarse por inactividad.</p>
+            <button class="btn-primary" onclick="extenderSesion()">Sí, extender tiempo</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
