@@ -146,3 +146,4 @@ window.onload = reiniciarTemporizador;
 document.onmousemove = reiniciarTemporizador;
 document.onclick = reiniciarTemporizador;
 document.onkeypress = reiniciarTemporizador;
+
