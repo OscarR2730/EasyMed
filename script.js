@@ -17,12 +17,13 @@ function navegarA(idVista) {
 }
 
 function validarPaso1() {
-    const dniInput = document.getElementById('dni-input').value;
-    if (dniInput.length === 8) {
-        citaDatos.dni = dniInput;
+    const dniInput = document.getElementById('dni-input').value.trim();
+    
+    if (dniInput.length >= 8) {
+        citaDatos.dni = dniInput.substring(0, 8);
         navegarA('view-specialty');
     } else {
-        alert("Por favor, ingresa un número de DNI válido de 8 dígitos.");
+        alert("Por favor, ingresa tu número de DNI de 8 dígitos.");
     }
 }
 
@@ -79,71 +80,6 @@ function guardarFecha() {
 
 let fontSize = 16;
 document.getElementById('btn-text-increase').addEventListener('click', () => {
-    if(fontSize < 24) { fontSize += 2; document.body.style.fontSize = fontSize + 'px'; }
-});
-document.getElementById('btn-text-decrease').addEventListener('click', () => {
-    if(fontSize > 14) { fontSize -= 2; document.body.style.fontSize = fontSize + 'px'; }
-});
-
-document.getElementById('btn-contrast').addEventListener('click', () => {
-    document.body.classList.toggle('high-contrast');
-});
-
-function iniciarDictado(inputId) {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRecognition) {
-        alert("Tu navegador no soporta el dictado por voz. Intenta usar Google Chrome.");
-        return;
-    }
-    
-    const recognition = new SpeechRecognition();
-    recognition.lang = 'es-PE';
-    recognition.interimResults = false;
-    
-    const inputTarget = document.getElementById(inputId);
-    const placeholderOriginal = inputTarget.placeholder;
-    inputTarget.placeholder = "Escuchando...";
-    
-    recognition.start();
-    
-    recognition.onresult = function(event) {
-        let textoDictado = event.results[0][0].transcript;
+    if(fontSize < 24) { 
+        fontSize
         
-        if(inputId === 'dni-input') {
-            textoDictado = textoDictado.replace(/\s+/g, '');
-            textoDictado = textoDictado.replace(/\D/g, '');
-            textoDictado = textoDictado.substring(0, 8);
-        }
-        
-        inputTarget.value = textoDictado;
-        inputTarget.placeholder = placeholderOriginal;
-        
-        if(inputId === 'date-input') { guardarFecha(); }
-    };
-    
-    recognition.onerror = function(event) {
-        alert("No se pudo detectar el audio. Asegúrate de dar permisos de micrófono.");
-        inputTarget.placeholder = placeholderOriginal;
-    };
-}
-
-let temporizadorInactividad;
-const TIEMPO_LIMITE = 90000;
-
-function reiniciarTemporizador() {
-    clearTimeout(temporizadorInactividad);
-    temporizadorInactividad = setTimeout(() => {
-        document.getElementById('timeout-modal').classList.remove('hidden');
-    }, TIEMPO_LIMITE);
-}
-
-function extenderSesion() {
-    document.getElementById('timeout-modal').classList.add('hidden');
-    reiniciarTemporizador();
-}
-
-window.onload = reiniciarTemporizador;
-document.onmousemove = reiniciarTemporizador;
-document.onclick = reiniciarTemporizador;
-document.onkeypress = reiniciarTemporizador;
-
