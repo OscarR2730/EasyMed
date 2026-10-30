@@ -12,11 +12,11 @@
         <header class="top-bar">
             <div class="logo">💙 EasyMed</div>
             <div class="accessibility-controls">
-                <button id="btn-contrast" aria-label="Activar Alto Contraste">🌓 Alto Contraste</button>
+                <button id="btn-contrast" onclick="toggleContraste()">🌓 Alto Contraste</button>
                 <div class="text-size-controls">
-                    <button id="btn-text-decrease" aria-label="Reducir texto">A-</button>
+                    <button id="btn-text-decrease" onclick="cambiarTexto(-2)">A-</button>
                     <span class="divider">/</span>
-                    <button id="btn-text-increase" aria-label="Aumentar texto">A+</button>
+                    <button id="btn-text-increase" onclick="cambiarTexto(2)">A+</button>
                 </div>
             </div>
         </header>
@@ -160,6 +160,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-
-
-
